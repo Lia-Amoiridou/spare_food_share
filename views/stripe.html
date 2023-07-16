@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+
+</head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="addproduct.css">
+<title>
+  SpareFoodShare
+</title>
+<header>
+  <nav>
+    <img src="/Users/ibrahim/Desktop/software project/logo.png" alt="ReLoad this page!" alt="Logo" style="width: 100px; height: 100px; border-radius: 50%;" >
+    <ul style="display: inline-block;"></ul>
+    <h2>    Reduce the waste .. Share the taste ! </h2>
+    <form>
+      <label for="search">Search: </label>
+      <input type="search" id="search" name="search" placeholder="Enter your search " autofocus>
+      <button type="submit">Go</button>
+    </form>
+    <form>
+      <button onclick="document.getElementById('id01').style.display='block'">Login</button>
+
+    </form>
+    </li>
+
+    </ul>
+
+  </nav>
+</header>
+<br>
+<div>
+  <img src="/Users/ibrahim/Desktop/header1.png" alt="Header Image" width ="1425" height="600">
+</div>
+
+
+
+<body>
+<header>
+  <h1>You can donate for this product or take it for free!</h1>
+</header>
+
+
+<div class="product-container">
+
+  <div class="product">
+    <a href="#" class="fa fa-facebook"></a>
+    <a href="#" class="fa fa-twitter"></a>
+    <a href="#" class="fa fa-whatsapp"></a> <br>
+    <img src="/Users/ibrahim/Desktop/mango.jpg" alt="Mango">
+    <h3>    Mango   </h3>
+    <p><i> <b> Description: </b></i> Egyption Mango. <br> Expire: 23/03/2023.</p>
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="border: none; padding: 0;margin-left:40px;">
+      <input type="hidden" name="cmd" value="_xclick">
+      <input type="hidden" name="business" value="youremail@yourdomain.com">
+      <input type="hidden" name="currency_code" value="USD">
+      <input type="text" name="amount" placeholder="Enter amount to donate" style="font-size: 16px; width: 200px; height: 30px; ">
+      <button value="Pay with PayPal" style="font-size: 14px; width: 150px; height: 40px;">Pay with PayPal </button>
+    </form>
+    <form id="payment-form" style="border: none; padding: 0;margin-left:40px;">
+      <div id="card-details" style="display: none;">
+        <div id="card-element" style="width: 200px; height: 30px;">
+          <!-- A Stripe Element will be inserted here. -->
+        </div>
+      </div>
+      <button id="toggle-card-details" type="button" style="font-size: 14px; width: 150px; height: 40px;">Pay with Stripe</button>
+      <button id="submit" type="submit" style="font-size: 16px; width: 150px; height: 40px; display: none;">Submit Payment</button>
+      <div id="payment-result"></div>
+    </form>
+
+    <script>
+      const publicKey = 'pk_live_51N4MEwBVH5V4FXHATIO70QeWYKFbX2fCJEascF4H9V04jrn3xhXO7WznbX7doD1Wq7e79LfU9rAbXgMGWODoUV4w00aN8urQnz';
+
+      const stripe = Stripe(publicKey);
+      const elements = stripe.elements();
+      const cardElement = elements.create('card');
+      cardElement.mount('#card-element');
+
+      const form = document.getElementById('payment-form');
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const result = await stripe.createToken(cardElement);
+        if (result.error) {
+          document.getElementById('payment-result').textContent = result.error.message;
+        } else {
+          // Send the token to your server for further processing
+          // You should use AJAX or fetch API to send a request to your server
+          console.log(result.token);
+        }
+      });
+
+      const toggleCardDetailsButton = document.getElementById('toggle-card-details');
+      const cardDetails = document.getElementById('card-details');
+      const submitButton = document.getElementById('submit');
+      toggleCardDetailsButton.addEventListener('click', () => {
+        cardDetails.style.display = 'block';
+        submitButton.style.display = 'block';
+        toggleCardDetailsButton.style.display = 'none';
+      });
+    </script>
+
+
+  </div>
+
+  <div class="map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d237592.01033791572!2d-1.6021284228697038!3d53.37800119417094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4879828e1d17bc61%3A0x46480c95d396e416!2sSheffield!5e0!3m2!1sen!2sus!4v1647993005514!5m2!1sen!2sus" width="400" height="300" frameborder="0"  allowfullscreen></iframe>
+  </div>
+
+
+  <button type="submit">Chat with provider</button>
+
+
+</div>
+</body>
+<footer><nav> <ul>
+  <div class="about">
+    <h3>About Us</h3>
+    <ul>
+      <li><a href="#">Spare Food Share</a></li>
+      <li><a href="#">Contact us & Help</a></li>
+      <li><a href="#">Legel & privacy Infomation</a></li>
+    </ul>
+
+  </div>
+  <div class="social-media">
+    <h3>Connect with Us</h3>
+    <ul>
+      <li><a href="#">Facebook</a></li>
+      <li><a href="#">Twitter</a></li>
+      <li><a href="#">Instagram</a></li>
+    </ul>
+  </div>
+</ul>
+</nav>
+  <p>&copy; 2023 Spare Food Share . All rights reserved.</p>
+</footer>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en"> 
+  <head> 
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-bX07zQeCT0jvL8W+ZpUmJi1cb0NW5OvED8Wjz0qXO5JNZUaM6jM4kyA4YY61UUNh6PcGYgJr2/gihH9mKWeRig==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style.css"> 
+   <link rel="chat-popup" href="chat.html">
+   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Page</title>
+    <link rel="style" href="style.css">
+</head>
+<header>
+  <nav>
+      <a href="/{{back}}"><button type="submit">Back</button></a>
+          <ul style="display: inline-block;  padding: 10px; margin-bottom: 10px;"></ul>
+          <div class="chat-header">
+              <p>Chat with the {{type}}:<p>
+          </div>
+  </nav>
+</header>          
+<body>
+    <div class="chat-window">
+      <div class="chat-messages">
+        <div class="message-container">
+            {{#each chats}}
+          <span class="sender">{{from}}:</span>
+          <p class="message-content">{{content}}</p>
+          <!--span class="timestamp">12:34pm</span-->
+            {{/each}}
+        </div>
+      </div>
+        <form action="/send" method="post" style="border: 0">
+      <input type="text" placeholder="Type your message here" class="chat-input" name="content" required style="margin-left: -100px">
+      <button id="send-btn" class="send-btn" style="text-align: right">Send</button>
+        </form>
+    </div>
+
+</body>
+</html>

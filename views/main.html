@@ -1,0 +1,286 @@
+<!DOCTYP<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpareFoodShare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-bX07zQeCT0jvL8W+ZpUmJi1cb0NW5OvED8Wjz0qXO5JNZUaM6jM4kyA4YY61UUNh6PcGYgJr2/gihH9mKWeRig==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<header>
+    <nav>
+        <a href="/"><img src="pic/logo.png" alt="Logo" style="width: 100px; height: 100px; border-radius: 50%;" ></a>
+        <ul>
+            <li>
+                <h2>Reduce the waste ... Share the taste !</h2>
+            </li>
+            <li>
+                <form action="/search" method="post">
+                    <label for="search">Search: </label>
+                    <input type="search" id="search" name="search" placeholder="Enter your search " autofocus>
+                    <button type="submit">Go</button>
+                </form>
+            </li>
+            <li>
+                <form action="/login" method="post">
+                    <button onclick="document.getElementById('id01').style.display='block'">Login</button>
+
+                    <div id="id01" class="modal">
+
+                        <div class="container">
+                            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                            <h1>Login</h1>
+                            <label for="email"><b>Email</b></label>
+                            <input type="text" placeholder="Enter Email" name="email" required>
+                            <label for="password"><b>Password</b></label>
+                            <input type="password" placeholder="Enter Password" name="password" required>
+
+                            <label>
+                                <input type="checkbox" checked="checked" name="remember"> Remember me
+                            </label>
+                        </div>
+                        <div class="container" style="background-color:#f1f1f1">
+                            <button class="submit">Login</button><br><br><br>
+                            <span class="psw"> <a href="/register">Not Registered?</a></span>
+                        </div>
+
+                    </div>
+                </form>
+            </li>
+        </ul>
+
+
+
+    </nav>
+
+</header>
+<br>
+<div>
+    <img src="pic/header1.png" alt="Header Image" width ="1750" height="900">  <!-- Modify: width: 1425, 600-->
+</div>
+
+<body>
+<header>
+    <h1>  You can donate for this product or take it for free!</h1>
+</header>
+
+
+<div class="product-container">
+    <div class="product">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyourwebsite.com%2Fproduct-page" target="_blank" class="fa fa-facebook"></a>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fyourwebsite.com%2Fproduct-page&text=Check%20out%20this%20amazing%20product!" target="_blank" class="fa fa-twitter"></a>
+        <a href="https://wa.me/?text=Check%20out%20this%20amazing%20product%3A%20localhost%3A3000%2Fitem" target="_blank" class="fa fa-whatsapp"></a>
+        <a href="#" class="fa fa-comments" id="chat-icon"></a>
+        <div id="chat-box" class="hidden">
+            <span id="close-chat" style="cursor:pointer; float:right;">&times;</span>
+
+            <h3>Chat Box</h3>
+            <div id="chat-messages"></div>
+            <input id="chat-input" type="text" placeholder="Type your message...">
+            <button id="send-message">Send</button>
+            <button class="fa fa-microphone" id="record-voice"></button>
+
+            <script>
+
+
+                document.addEventListener("DOMContentLoaded", function() {
+                    function toggleChatBox() {
+                        var chatBox = document.getElementById("chat-box");
+                        if (chatBox.classList.contains("hidden")) {
+                            chatBox.classList.remove("hidden");
+                        } else {
+                            chatBox.classList.add("hidden");
+                        }
+                    }
+
+                    function recordVoice() {
+                        navigator.mediaDevices.getUserMedia({ audio: true })
+                            .then(function(stream) {
+                                var mediaRecorder = new MediaRecorder(stream);
+                                mediaRecorder.start();
+
+                                var chunks = [];
+                                mediaRecorder.addEventListener("dataavailable", function(event) {
+                                    chunks.push(event.data);
+                                });
+
+                                mediaRecorder.addEventListener("stop", function() {
+                                    var blob = new Blob(chunks);
+                                    var audioUrl = URL.createObjectURL(blob);
+
+                                    var message = document.createElement("div");
+                                    var audio = document.createElement("audio");
+                                    audio.controls = true;
+                                    audio.src = audioUrl;
+                                    message.appendChild(audio);
+
+                                    var chatMessages = document.getElementById("chat-messages");
+                                    chatMessages.appendChild(message);
+                                    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                                    toggleChatBox();
+                                });
+
+                                setTimeout(function() {
+                                    mediaRecorder.stop();
+                                }, 5000);
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            });
+                    }
+
+                    document.getElementById("chat-icon").addEventListener("click", function(event) {
+                        event.preventDefault();
+                        toggleChatBox();
+                    });
+
+                    document.getElementById("chat-icon1").addEventListener("click", function(event) {
+                        event.preventDefault();
+                        toggleChatBox();
+                    });
+                    document.getElementById("chat-icon2").addEventListener("click", function(event) {
+                        event.preventDefault();
+                        toggleChatBox();
+                    });
+                    document.getElementById("chat-icon3").addEventListener("click", function(event) {
+                        event.preventDefault();
+                        toggleChatBox();
+                    });
+                    document.getElementById("chat-icon4").addEventListener("click", function(event) {
+                        event.preventDefault();
+                        toggleChatBox();
+                    });
+                    document.getElementById("chat-icon5").addEventListener("click", function(event) {
+                        event.preventDefault();
+                        toggleChatBox();
+                    });
+                    document.getElementById("send-message").addEventListener("click", function() {
+                        var chatInput = document.getElementById("chat-input");
+                        var chatMessages = document.getElementById("chat-messages");
+
+                        if (chatInput.value.trim() !== "") {
+                            var message = document.createElement("div");
+                            message.textContent = chatInput.value;
+                            chatMessages.appendChild(message);
+                            chatInput.value = "";
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        }
+                    });
+
+                    document.getElementById("record-voice").addEventListener("click", function() {
+                        recordVoice();
+                    });
+
+                    document.getElementById("close-chat").addEventListener("click", function() {
+                        document.getElementById("chat-box").classList.add("hidden");
+                    });
+                });
+            </script>
+        </div>
+        <br>
+        <img src="pic/{{item0.item_url}}" alt="Product 1" width="300" height="300">
+        <h3>   {{item0.item_name}}   </h3>
+        <p><i> <b> Description: </b></i> {{item0.item_desc}} <br> Expire : {{item0.exp_date}} </p>
+        <a href="/buffer/{{item0._id}}"><button class="transition"> View this item </button></a>  <!-- Modify: href="addproduct1.html"-->
+    </div>
+    <div class="product">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyourwebsite.com%2Fproduct-page" target="_blank" class="fa fa-facebook"></a>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fyourwebsite.com%2Fproduct-page&text=Check%20out%20this%20amazing%20product!" target="_blank" class="fa fa-twitter"></a>
+        <a href="https://wa.me/?text=Check%20out%20this%20amazing%20product%3A%20localhost%3A3000%2Fitem" target="_blank" class="fa fa-whatsapp"></a>
+        <a href="#" class="fa fa-comments" id="chat-icon1" ></a>
+
+
+        <br>
+        <img src="pic/{{item1.item_url}}" alt="Product 2" width="300" height="300">
+        <h3>   {{item1.item_name}}   </h3>
+        <p><i> <b> Description: </b></i> {{item1.item_desc}} <br> Expire : {{item1.exp_date}} </p>
+        <a href="/buffer/{{item1._id}}"><button class="transition"> View this item  </button></a>
+    </div>
+
+    <div class="product">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyourwebsite.com%2Fproduct-page" target="_blank" class="fa fa-facebook"></a>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fyourwebsite.com%2Fproduct-page&text=Check%20out%20this%20amazing%20product!" target="_blank" class="fa fa-twitter"></a>
+        <a href="https://wa.me/?text=Check%20out%20this%20amazing%20product%3A%20localhost%3A3000%2Fitem" target="_blank" class="fa fa-whatsapp"></a>
+        <a href="#" class="fa fa-comments"id="chat-icon2" ></a>
+
+        <br>
+        <img src="pic/{{item2.item_url}}" alt="Product 3" width="300" height="300">
+        <h3>   {{item2.item_name}}   </h3>
+        <p><i> <b> Description: </b></i> {{item2.item_desc}} <br> Expire : {{item2.exp_date}} </p>
+        <a href="/buffer/{{item2._id}}"><button class="transition">View this item  </button></a>
+    </div>
+
+
+    <div class="product">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyourwebsite.com%2Fproduct-page" target="_blank" class="fa fa-facebook"></a>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fyourwebsite.com%2Fproduct-page&text=Check%20out%20this%20amazing%20product!" target="_blank" class="fa fa-twitter"></a>
+        <a href="https://wa.me/?text=Check%20out%20this%20amazing%20product%3A%20localhost%3A3000%2Fitem" target="_blank" class="fa fa-whatsapp"></a>
+        <a href="#" class="fa fa-comments" id="chat-icon3"></a>
+
+        <br>
+        <img src="pic/{{item3.item_url}}" alt="Product 4" width="300" height="300">
+        <h3>   {{item3.item_name}}   </h3>
+        <p><i> <b> Description: </b></i> {{item3.item_desc}} <br> Expire : {{item3.exp_date}} </p>
+        <a href="/buffer/{{item3._id}}"><button class="transition">View this item </button></a>
+    </div>
+
+    <div class="product">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyourwebsite.com%2Fproduct-page" target="_blank" class="fa fa-facebook"></a>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fyourwebsite.com%2Fproduct-page&text=Check%20out%20this%20amazing%20product!" target="_blank" class="fa fa-twitter"></a>
+        <a href="https://wa.me/?text=Check%20out%20this%20amazing%20product%3A%20localhost%3A3000%2Fitem" target="_blank" class="fa fa-whatsapp"></a>
+        <a href="#" class="fa fa-comments"id="chat-icon4" ></a>
+
+        <br>
+        <img src="pic/{{item4.item_url}}" alt="Product 5" width="300" height="300">
+        <h3>   {{item4.item_name}}   </h3>
+        <p><i> <b> Description: </b></i> {{item4.item_desc}} <br> Expire : {{item4.exp_date}} </p>
+        <a href="/buffer/{{item4._id}}"><button class="transition">View this item  </button></a>
+    </div>
+    <div class="product">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyourwebsite.com%2Fproduct-page" target="_blank" class="fa fa-facebook"></a>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fyourwebsite.com%2Fproduct-page&text=Check%20out%20this%20amazing%20product!" target="_blank" class="fa fa-twitter"></a>
+        <a href="https://wa.me/?text=Check%20out%20this%20amazing%20product%3A%20localhost%3A3000%2Fitem" target="_blank" class="fa fa-whatsapp"></a>
+        <a href="#" class="fa fa-comments" id="chat-icon5"></a>
+
+        <br>
+        <img src="pic/{{item5.item_url}}" alt="Product 6" width="300" height="300">
+        <h3>   {{item5.item_name}}   </h3>
+        <p><i> <b> Description: </b></i> {{item5.item_desc}} <br> Expire : {{item5.exp_date}} </p>
+        <a href="/buffer/{{item5._id}}"><button class="transition">View this item  </button></a>
+    </div>
+
+</div>
+
+
+</body>
+<footer><nav> <ul>
+    <div class="about">
+        <h3>About Us</h3>
+        <ul>
+            <li><a href="/about">Spare Food Share</a></li><br>
+            <li><a href="/help">Contact us & Help</a></li> <br>
+            <li><a href="/legal">Legal & privacy Infomation</a></li>
+        </ul>
+
+    </div>
+    <div class="social-media">  <!-- Modify: Connect with us -->
+        <h3>Connect with Us</h3>
+        <ul>
+            <li><a href="#">Facebook</a></li> <br>
+            <li><a href="#">Twitter</a></li><br>
+            <li><a href="#">Instagram</a></li><br>
+        </ul>
+    </div>
+</ul>
+</nav>
+    <p>&copy; 2023 Spare Food Share . All rights reserved.</p>
+</footer>
+
+</html>

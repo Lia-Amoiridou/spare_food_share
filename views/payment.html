@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://js.stripe.com/v3/"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Payment Page</title>
+
+</head>
+<header>
+  <nav>
+    <a href="/"><img src="pic/logo.png" alt="Logo" style="width: 100px; height: 100px; border-radius: 50%;" ></a>
+    <ul>
+      <li>
+        <h2>Reduce the waste ... Share the taste !</h2>
+      </li>
+    </ul>
+  </nav>
+</header>
+<body>
+<h1>Please select a payment method: </h1>
+<br>
+<div id="div-paypal" style="text-align: center">
+  <form action="/paypal" method="post" target="_top" style="border: none; padding: 0;margin: 0">
+    <!--form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="border: none; padding: 0;margin: 0"-->
+    <input type="hidden" name="cmd" value="_xclick">
+    <input type="hidden" name="business" value="youremail@yourdomain.com">
+    <input type="hidden" name="currency_code" value="USD">
+    <!--input type="text" name="amount" placeholder="Enter amount to donate" style="font-size: 16px; width: 200px; height: 30px; "-->
+    <button value="Pay with PayPal" style="font-size: 30px; width: 300px; height: 80px;">Pay with PayPal </button>
+  </form>
+</div>
+<br>
+<div id="div-stripe" style="text-align: center">
+  <form id="payment-form" style="border: none; padding: 0; margin: 0">
+    <div id="card-details" style="display: none;">
+      <div id="card-element" style="width: 200px; height: 30px">
+        <!-- A Stripe Element will be inserted here. -->
+      </div>
+    </div>
+    <button id="toggle-card-details" type="button" style="font-size: 30px; width: 300px; height: 80px;">Pay with Stripe</button>
+    <button id="submit" type="submit" style="font-size: 30px; width: 300px; height: 80px; display: none;">Pay</button>
+    <div id="payment-result"></div>
+  </form>
+</div>
+<br>
+    <script>
+      const publicKey = 'pk_live_51N4MEwBVH5V4FXHATIO70QeWYKFbX2fCJEascF4H9V04jrn3xhXO7WznbX7doD1Wq7e79LfU9rAbXgMGWODoUV4w00aN8urQnz';
+
+      const stripe = Stripe(publicKey);
+      const elements = stripe.elements();
+      const cardElement = elements.create('card');
+      cardElement.mount('#card-element');
+
+      const form = document.getElementById('payment-form');
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const result = await stripe.createToken(cardElement);
+        if (result.error) {
+          document.getElementById('payment-result').textContent = result.error.message;
+        } else {
+          // Send the token to your server for further processing
+          // You should use AJAX or fetch API to send a request to your server
+          console.log(result.token);
+        }
+      });
+
+      const toggleCardDetailsButton = document.getElementById('toggle-card-details');
+      const cardDetails = document.getElementById('card-details');
+      const submitButton = document.getElementById('submit');
+
+      toggleCardDetailsButton.addEventListener('click', () => {
+        cardDetails.style.display = 'block';
+        submitButton.style.display = 'block';
+        toggleCardDetailsButton.style.display = 'none';
+      });
+    </script>
+</body>
+<footer><nav> <ul>
+  <div class="about">
+    <h3>About Us</h3>
+    <ul>
+      <li><a href="/about">Spare Food Share</a></li><br>
+      <li><a href="/help">Contact us & Help</a></li> <br>
+      <li><a href="/legal">Legal & privacy Infomation</a></li>
+    </ul>
+
+  </div>
+  <div class="social-media">  <!-- Modify: Connect with us -->
+    <h3>Connect with Us</h3>
+    <ul>
+      <li><a href="#">Facebook</a></li> <br>
+      <li><a href="#">Twitter</a></li><br>
+      <li><a href="#">Instagram</a></li><br>
+    </ul>
+  </div>
+</ul>
+</nav>
+  <p>&copy; 2023 Spare Food Share . All rights reserved.</p>
+</footer>
+</html>

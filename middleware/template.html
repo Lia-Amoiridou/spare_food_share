@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Spare food share!</title>
+</head>
+<body>
+<h1>Prod List</h1>
+<ul>
+  {{#each users}}
+  <li>Name: {{item_name}}</li>
+  <li>Describe : {{this.item_desc}}</li>
+  <li>expire date : {{this.exp_date}}</li>
+  <li>sold out status : {{this.sold_or_expired}}</li>
+  <li>tags : {{this.tags}}</li>
+
+
+  <br />
+  {{/each}}
+</ul>
+</body>
+</html>

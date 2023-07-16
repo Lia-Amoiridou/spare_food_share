@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Search Page</title>
+   
+</head>
+<header>
+    <nav>
+        <a href="/"><img src="pic/logo.png" alt="Logo" style="width: 100px; height: 100px; border-radius: 50%;" ></a>
+        <ul>
+            <li>
+                <h2>Reduce the waste ... Share the taste !</h2>
+            </li>
+            <li>
+                <form action="/search" method="post">
+                    <label for="search">Search: </label>
+                    <input type="search" id="search" name="search" placeholder="Enter your search " autofocus>
+                    <button type="submit">Go</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+</header>
+<body>
+    <h1>Search Results: {{search}} </h1>
+    <div class="grid-container">
+        {{#each items}}
+        <div class="grid-item">
+            <img src="pic/{{item_url}}" alt="item_url" width="200" height="200">
+            <h3>{{item_name}}</h3>
+            <p>{{item_desc}}</p>
+            <a href="/buffer/{{_id}}">
+                <button class="select-btn">View this item</button>
+            </a>
+        </div>
+        {{/each}}
+    </div>
+</body>
+<footer><nav> <ul>
+    <div class="about">
+        <h3>About Us</h3>
+        <ul>
+            <li><a href="/about">Spare Food Share</a></li><br>
+            <li><a href="/help">Contact us & Help</a></li> <br>
+            <li><a href="/legal">Legal & privacy Infomation</a></li>
+        </ul>
+
+    </div>
+    <div class="social-media">  <!-- Modify: Connect with us -->
+        <h3>Connect with Us</h3>
+        <ul>
+            <li><a href="#">Facebook</a></li> <br>
+            <li><a href="#">Twitter</a></li><br>
+            <li><a href="#">Instagram</a></li><br>
+        </ul>
+    </div>
+</ul>
+  </nav>
+  <p>&copy; 2023 Spare Food Share . All rights reserved.</p>
+  </footer>
+</html>
+
+

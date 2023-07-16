@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Admin Page</title>
+</head>
+<link rel="stylesheet" href="style.css">
+<body>
+<header>
+    <nav>
+        <a href="/"><img src="pic/logo.png" alt="ReLoad this page!" alt="Logo" style="width: 100px; height: 100px; border-radius: 50%;" ></a>
+        <ul style="display: inline-block;"></ul>
+        <h2>    Reduce the waste .. Share the taste ! </h2>
+    </nav>
+</header>
+<br>
+<header>
+    <h1 style="text-align: center">ADIMN PAGE</h1>
+    <br>
+</header>
+<main>
+    <section style="display: flex; justify-content: center; align-items: center;">
+        <p id="admin-info" style="text-align: center; margin-top: 20px;"></p>
+        <div style="border: 2px solid rgba(8, 194, 223, 0.767); padding: 20px; display: flex; flex-direction: column; align-items: center;">
+            <img src="pic/avatar.png" alt="avatar">
+            <br>
+            <h1>System Administrator</h1>
+            <form style="padding: 50px; margin-left: 10px">
+                <label for="total products">TOTAL PRODUCTS:</label>
+                <span id="total-products">{{n_items}}</span>
+                <br><br>
+                <label for="Products carried out">PRODUCTS CARRIED OUT:</label>
+                <span id="products-carried-out">{{n_items_sold}}</span>
+                <br><br>
+                <label for="Items for collection">ITEMS FOR COLLECTION:</label>
+                <span id="items-for-collection">{{n_items_stock}}</span>
+                <br><br>
+                <label for="Total amount ">TOTAL AMOUNT CHARGED:</label>
+                <span id="total-amount">{{sum_amount}}</span>
+                <br>
+            </form>
+            <br><br>
+            <h2 style = "margin-left: 30px;">Items in stock:</h2>
+            <br>
+            <table border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Items Name</th>
+                    <th>Items Pictures</th>
+                    <th>Expire Date</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each items_stock}}
+                <tr>
+                    <td>{{item_name}}</td>
+                    <td><img src="pic/{{item_url}}" alt="{{item_url}}" width="100" height="100"></td>
+                    <td>{{exp_date}}</td>
+                    <td>{{item_desc}}</td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table><br><br>
+            <h2 style = "margin-left: 30px;">Items has been sold:</h2>
+            <br>
+            <table border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Items Name</th>
+                    <th>Items Pictures</th>
+                    <th>Expire Date</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each items_sold}}
+                <tr>
+                    <td>{{item_name}}</td>
+                    <td><img src="pic/{{item_url}}" alt="{{item_url}}" width="100" height="100"></td>
+                    <td>{{exp_date}}</td>
+                    <td>{{item_desc}}</td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table><br><br>
+            <h2 style = "margin-left: 30px;">Items has expired:</h2>
+            <br>
+            <table border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Items Name</th>
+                    <th>Items Pictures</th>
+                    <th>Expire Date</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each items_expired}}
+                <tr>
+                    <td>{{item_name}}</td>
+                    <td><img src="pic/{{item_url}}" alt="{{item_url}}" width="100" height="100"></td>
+                    <td>{{exp_date}}</td>
+                    <td>{{item_desc}}</td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table><br><br>
+        </div>
+    </section>
+    <br><br>
+
+    <!-- Your existing main and script elements -->
+    <script>
+        window.onload = function () {
+            const util = require('util')
+            const multer = require('multer')
+            const { GridFsStorage } = require("multer-gridfs-storage");
+
+            const dbConfig = module.exports = {
+                url: "mongodb+srv://Agnesia:Agne9227@sparefs.syeuzzs.mongodb.net/",
+                database: "sfs",
+                imgBucket: "prodModel",
+            };
+            var storage = new GridFsStorage({
+                url: dbConfig.url + dbConfig.database,
+                options: { useNewUrlParser: true, useUnifiedTopology: true },
+                file: (req, file) => {
+                    const match = ["image/png", "image/jpeg"];
+
+                    if (match.indexOf(file.mimetype) === -1) {
+                        const filename = `${Date.now()}-${file.originalname}`;
+                        return filename;
+                    }
+
+                    return {
+                        bucketName: dbConfig.imgBucket,
+                        filename: `${Date.now()}-${file.originalname}`
+                    };
+                }
+            });
+
+            var opt = {
+                margin: 1,
+                filename: 'myfile.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().from(invoice).set(opt).save()
+        }
+    </script>
+
+</body>
+<footer><nav> <ul>
+    <div class="about">
+        <h3>About Us</h3>
+        <ul>
+            <li><a href="about.html">Spare Food Share</a></li><br>
+            <li><a href="help.html">Contact us & Help</a></li> <br>
+            <li><a href="legal.html">Legel & privacy Infomation</a></li>
+        </ul>
+
+    </div>
+    <div class="social-media">
+        <h3>Connect with Us</h3>
+        <ul>
+            <li><a href="#">Facebook</a></li> <br>
+            <li><a href="#">Twitter</a></li><br>
+            <li><a href="#">Instagram</a></li><br>
+        </ul>
+    </div>
+</ul>
+</nav>
+    <p>&copy; 2023 Spare Food Share . All rights reserved.</p>
+</footer>
+</html>
